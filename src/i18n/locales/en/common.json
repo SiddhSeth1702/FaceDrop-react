@@ -1,0 +1,9 @@
+{
+  "language": "Language",
+  "cancel": "Cancel",
+  "close": "Close",
+  "takeSelfie": "Take a selfie",
+  "capture": "Capture",
+  "selfieTip": "Face the camera in good light. Just you in the frame works best.",
+  "cameraDenied": "Camera access denied. Please allow camera permissions."
+}

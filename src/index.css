@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* FaceDrop design system. All colors are HSL triplets so Tailwind can apply
+   opacity modifiers, e.g. bg-primary/10. Source of truth: /brand-design. */
+
+@layer base {
+  :root {
+    /* Raw palette */
+    --ink-950: 240 24% 6%;
+    --ink-900: 240 21% 10%;
+    --ink-800: 240 16% 16%;
+    --ink-600: 240 8% 38%;
+    --ink-400: 240 6% 62%;
+    --ink-200: 240 10% 88%;
+    --ink-100: 240 14% 94%;
+    --paper: 60 20% 98%;
+
+    --iris-700: 246 75% 50%;
+    --iris-600: 246 85% 58%;
+    --iris-500: 246 100% 65%;
+    --iris-300: 246 100% 82%;
+    --iris-100: 246 100% 96%;
+
+    --lime-500: 76 88% 62%;
+    --lime-100: 76 90% 92%;
+
+    /* Semantic */
+    --background: var(--paper);
+    --foreground: var(--ink-950);
+
+    --card: 0 0% 100%;
+    --card-foreground: var(--ink-950);
+    --popover: 0 0% 100%;
+    --popover-foreground: var(--ink-950);
+
+    --primary: var(--iris-500);
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: var(--ink-100);
+    --secondary-foreground: var(--ink-950);
+
+    --muted: var(--ink-100);
+    --muted-foreground: var(--ink-600);
+
+    --accent: var(--iris-100);
+    --accent-foreground: var(--iris-700);
+
+    --signal: var(--lime-500);
+    --signal-foreground: var(--ink-950);
+
+    /* Dark "ink" cards (plan card, guest code, toasts). Lifted in dark mode so they don't vanish. */
+    --inverse: var(--ink-950);
+    --inverse-foreground: 0 0% 100%;
+
+    /* Status chip pairs */
+    --live: var(--lime-100);
+    --live-foreground: 80 70% 24%;
+    --warn: 38 95% 90%;
+    --warn-foreground: 30 80% 30%;
+    --danger: 0 80% 95%;
+    --danger-foreground: 0 70% 40%;
+
+    --success: 152 60% 38%;
+    --warning: 38 95% 55%;
+    --destructive: 0 78% 56%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: var(--ink-200);
+    --input: var(--ink-200);
+    --input-focus: var(--iris-500);
+    --ring: var(--iris-500);
+
+    --radius: 0.875rem;
+
+    --sidebar-background: var(--ink-950);
+    --sidebar-foreground: var(--ink-200);
+    --sidebar-primary: var(--lime-500);
+    --sidebar-primary-foreground: var(--ink-950);
+    --sidebar-accent: var(--ink-800);
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: var(--ink-800);
+    --sidebar-ring: var(--iris-500);
+
+    /* Film grain used on photos and the page background */
+    --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .3 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .dark {
+    /* Tints flip to deep versions so chips stay readable on dark surfaces */
+    --iris-100: 246 40% 22%;
+    --iris-700: 246 100% 85%;
+    --lime-100: 76 40% 15%;
+
+    --background: var(--ink-950);
+    --foreground: 240 10% 96%;
+    --card: var(--ink-900);
+    --card-foreground: 240 10% 96%;
+    --popover: var(--ink-900);
+    --popover-foreground: 240 10% 96%;
+    --primary: var(--iris-500);
+    --primary-foreground: 0 0% 100%;
+    --secondary: var(--ink-800);
+    --secondary-foreground: 240 10% 96%;
+    --muted: var(--ink-800);
+    --muted-foreground: var(--ink-400);
+    --accent: 246 40% 20%;
+    --accent-foreground: var(--iris-300);
+    --border: 240 14% 18%;
+    --input: 240 14% 22%;
+    --input-focus: var(--iris-300);
+    --ring: var(--iris-300);
+
+    --inverse: 240 16% 15%;
+    --inverse-foreground: 0 0% 100%;
+
+    --live: var(--lime-100);
+    --live-foreground: var(--lime-500);
+    --warn: 38 60% 16%;
+    --warn-foreground: 38 95% 65%;
+    --danger: 0 50% 17%;
+    --danger-foreground: 0 90% 72%;
+
+    --sidebar-background: 240 24% 4%;
+    --sidebar-border: 240 14% 14%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Subtle paper grain over the whole app */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: var(--noise);
+    background-size: 160px;
+    opacity: 0.12;
+    mix-blend-mode: multiply;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-[-0.025em];
+  }
+}
+
+@layer components {
+  /* Highlighter swipe behind a word */
+  .marker {
+    @apply relative z-0 whitespace-nowrap px-[0.06em] text-ink-950;
+  }
+  .marker::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0.2em -0.12em 0.04em -0.1em;
+    background: hsl(var(--signal));
+    border-radius: 0.55em 0.2em 0.6em 0.15em / 0.3em 0.5em 0.2em 0.6em;
+    transform: rotate(-1.6deg) skewX(-8deg);
+  }
+
+  .polaroid {
+    @apply m-0 rounded-[2px] bg-white px-2.5 pt-2.5;
+    box-shadow: 0 1px 1px hsl(0 0% 0% / 0.08), 0 18px 34px -14px hsl(0 0% 0% / 0.45);
+  }
+
+  .tape {
+    @apply absolute left-1/2 -top-3 z-10 h-[26px] w-[92px];
+    transform: translateX(-50%) rotate(-3deg);
+    background: hsl(48 70% 88% / 0.8);
+    box-shadow: 0 1px 2px hsl(0 0% 0% / 0.08);
+    clip-path: polygon(3% 0, 97% 5%, 100% 32%, 97% 62%, 99% 100%, 2% 95%, 0 60%, 3% 30%);
+  }
+
+  /* Film-style photo placeholder: warm bokeh and a blurred, backlit guest.
+     Used until real event photos are available (see /brand-design). */
+  .film {
+    position: relative;
+    overflow: hidden;
+    background:
+      var(--noise),
+      radial-gradient(circle at var(--x1, 20%) var(--y1, 18%), hsl(45 100% 86% / 0.75) 0 3%, transparent 8%),
+      radial-gradient(circle at var(--x2, 78%) var(--y2, 12%), hsl(35 100% 80% / 0.55) 0 5%, transparent 11%),
+      radial-gradient(circle at var(--x3, 88%) var(--y3, 46%), hsl(200 90% 88% / 0.4) 0 4%, transparent 10%),
+      radial-gradient(circle at var(--x4, 10%) var(--y4, 52%), hsl(40 100% 75% / 0.35) 0 6%, transparent 13%),
+      radial-gradient(ellipse at 50% 45%, transparent 35%, hsl(0 0% 0% / 0.45) 100%),
+      linear-gradient(170deg, var(--c1, hsl(275 35% 40%)), var(--c2, hsl(330 40% 20%)));
+    background-size: 160px 160px, auto, auto, auto, auto, auto, auto;
+  }
+  .film::before {
+    content: "";
+    position: absolute;
+    left: var(--fx, 50%);
+    bottom: -8%;
+    width: 60%;
+    height: 80%;
+    transform: translateX(-50%);
+    background:
+      radial-gradient(21% 16% at 50% 20%, hsl(var(--sk, 20 30% 16%)) 97%, transparent 100%),
+      radial-gradient(52% 50% at 50% 100%, hsl(var(--sk, 20 30% 16%)) 97%, transparent 100%);
+    filter: blur(6px);
+    opacity: 0.55;
+  }
+  .film-1 { --c1: hsl(275 35% 40%); --c2: hsl(330 40% 20%); --fx: 46%; }
+  .film-2 { --c1: hsl(30 72% 56%); --c2: hsl(8 50% 24%); --x1: 70%; --y1: 25%; --x2: 25%; --fx: 58%; }
+  .film-3 { --c1: hsl(185 32% 36%); --c2: hsl(215 45% 13%); --x2: 40%; --y2: 20%; --fx: 40%; --sk: 210 30% 8%; }
+  .film-4 { --c1: hsl(40 80% 66%); --c2: hsl(18 55% 36%); --x1: 82%; --x3: 15%; --y3: 30%; --fx: 55%; }
+  .film-5 { --c1: hsl(215 42% 50%); --c2: hsl(240 35% 18%); --x1: 50%; --y1: 10%; --fx: 44%; --sk: 230 30% 10%; }
+  .film-6 { --c1: hsl(345 45% 60%); --c2: hsl(290 25% 24%); --x2: 60%; --y2: 30%; --fx: 52%; }
+
+  /* Viewfinder corner brackets: the brand's signature motif */
+  .finder {
+    @apply pointer-events-none absolute inset-2 z-10;
+    --c: hsl(var(--signal));
+    background:
+      linear-gradient(var(--c), var(--c)) top left / 22px 3px,
+      linear-gradient(var(--c), var(--c)) top left / 3px 22px,
+      linear-gradient(var(--c), var(--c)) top right / 22px 3px,
+      linear-gradient(var(--c), var(--c)) top right / 3px 22px,
+      linear-gradient(var(--c), var(--c)) bottom left / 22px 3px,
+      linear-gradient(var(--c), var(--c)) bottom left / 3px 22px,
+      linear-gradient(var(--c), var(--c)) bottom right / 22px 3px,
+      linear-gradient(var(--c), var(--c)) bottom right / 3px 22px;
+    background-repeat: no-repeat;
+  }
+}
+
+@layer utilities {
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+}
