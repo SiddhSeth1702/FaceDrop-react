@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useState, useSyncExternalStore } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { AlertCircle, BarChart3, CreditCard, LayoutGrid, MessageSquareQuote, Ticket, Loader2, ChevronsUpDown, LogOut, Menu, Plus, Settings } from "lucide-react";
+import { AlertCircle, BarChart3, Inbox, Store, CreditCard, LayoutGrid, MessageSquareQuote, Ticket, Loader2, ChevronsUpDown, LogOut, Menu, Plus, Settings } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { getAllUploads, subscribeToAllUploads } from "@/pages/Event/helper/uploadManager";
 import { formatCount, formatDay, PlansResponse, usePlans } from "@/pages/Billing/helper/billing";
 import { usePendingReviewCount } from "@/pages/Insights/helper/insights";
+import { useNewLeadCount } from "@/pages/Studio/helper/leads";
 import { Logo, LogoMark } from "./Logo";
 import { ROUTES } from "@/lib/routes";
 
@@ -24,6 +25,8 @@ const NAV_GROUPS = [
       { to: ROUTES.dashboard, label: "My events", icon: LayoutGrid, match: (path: string) => path === ROUTES.dashboard || path.startsWith("/dashboard/events") },
       { to: ROUTES.insights, label: "Insights", icon: BarChart3, match: (path: string) => path.startsWith(ROUTES.insights) },
       { to: ROUTES.reviews, label: "Reviews", icon: MessageSquareQuote, match: (path: string) => path.startsWith(ROUTES.reviews) },
+      { to: ROUTES.studio, label: "Studio page", icon: Store, match: (path: string) => path.startsWith(ROUTES.studio) },
+      { to: ROUTES.enquiries, label: "Enquiries", icon: Inbox, match: (path: string) => path.startsWith(ROUTES.enquiries) },
     ],
   },
   {
@@ -90,6 +93,8 @@ const SidebarContent = () => {
   const { showLoader, hideLoader } = useLoader();
   const { data: plans } = usePlans();
   const pendingReviews = usePendingReviewCount();
+  const newLeads = useNewLeadCount();
+  const badges: Record<string, number> = { [ROUTES.reviews]: pendingReviews, [ROUTES.enquiries]: newLeads };
 
   const handleLogout = () => {
     showLoader();
@@ -131,9 +136,9 @@ const SidebarContent = () => {
             >
               <Icon className={cn("h-4 w-4", active && "text-lime-500")} />
               {label}
-              {to === ROUTES.reviews && pendingReviews > 0 && (
-                <span className="ml-auto rounded-full bg-lime-500 px-1.5 py-px font-mono text-[11px] font-bold text-ink-950" aria-label={`${pendingReviews} new`}>
-                  {pendingReviews}
+              {(badges[to] ?? 0) > 0 && (
+                <span className="ml-auto rounded-full bg-lime-500 px-1.5 py-px font-mono text-[11px] font-bold text-ink-950" aria-label={`${badges[to]} new`}>
+                  {badges[to]}
                 </span>
               )}
             </NavLink>

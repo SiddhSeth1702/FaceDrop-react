@@ -22,6 +22,9 @@ const VerifyEmailPage = lazy(() => import("./pages/Auth/component/VerifyEmailPag
 const PlansPage = lazy(() => import("./pages/Billing/component/PlansPage"));
 const BillingPage = lazy(() => import("./pages/Billing/component/BillingPage"));
 const InsightsPage = lazy(() => import("./pages/Insights/component/InsightsPage"));
+const StudioEditorPage = lazy(() => import("./pages/Studio/component/StudioEditorPage"));
+const EnquiriesPage = lazy(() => import("./pages/Studio/component/EnquiriesPage"));
+const PublicStudioPage = lazy(() => import("./pages/Studio/component/PublicStudioPage"));
 const JoinPage = lazy(() => import("./pages/Joined/component/JoinPage"));
 const JoinedListPage = lazy(() => import("./pages/Joined/component/JoinedListPage"));
 const JoinedEventPage = lazy(() => import("./pages/Joined/component/JoinedEventPage"));
@@ -76,6 +79,8 @@ const App = () => {
             //  */}
             <Route path="/verify-email/:userId/:token" element={<VerifyEmailPage />} />
 
+            {/* A photographer's public Studio page */}
+            <Route path="/s/:slug" element={<PublicStudioPage />} />
             {/* The QR target: sign in (if needed), join, land in the event */}
             <Route path="/join/:code" element={<AuthCheck><JoinPage /></AuthCheck>} />
             {/* Old guest links (printed QR cards) still work */}
@@ -98,6 +103,8 @@ const App = () => {
               <Route path="plans" element={<PlansPage />} />
               <Route path="billing" element={<BillingPage />} />
               <Route path="insights" element={<InsightsPage />} />
+              <Route path="studio" element={<StudioEditorPage />} />
+              <Route path="enquiries" element={<EnquiriesPage />} />
               <Route path="reviews" element={<ReviewsPage />} />
               <Route path="joined" element={<JoinedListPage />} />
               <Route path="joined/:eventId" element={<JoinedEventPage />} />

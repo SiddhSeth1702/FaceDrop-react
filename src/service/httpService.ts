@@ -28,7 +28,9 @@ const PUBLIC_ENDPOINTS = [
     forgetPasswordUrl,
     resetPasswordUrl,
     resendVerificationEmailUrl,
-    verifyEmailUrl
+    verifyEmailUrl,
+    // Published Studio pages are open to anyone with the link
+    "user/studio-pages/"
 ];
 
 // Interceptor for global error handling

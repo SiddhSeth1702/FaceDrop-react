@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 
-type LogoVariant = "default" | "inverse";
+/** default follows the app theme; inverse is for dark grounds; light stays ink on paper whatever the theme. */
+type LogoVariant = "default" | "inverse" | "light";
 
 interface LogoMarkProps {
   size?: number;
@@ -11,7 +12,7 @@ interface LogoMarkProps {
 /** Viewfinder brackets locking onto a lime dot: the guest who was found. */
 export const LogoMark = ({ size = 32, variant = "default", className }: LogoMarkProps) => (
   <svg width={size} height={size} viewBox="0 0 40 40" className={cn("shrink-0", className)} aria-hidden="true">
-    <rect width="40" height="40" rx="11" className={variant === "inverse" ? "fill-iris-500" : "fill-ink-950 dark:fill-iris-500"} />
+    <rect width="40" height="40" rx="11" className={variant === "inverse" ? "fill-iris-500" : variant === "light" ? "fill-ink-950" : "fill-ink-950 dark:fill-iris-500"} />
     <g fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
       <path d="M10.5 16.5v-3a3 3 0 0 1 3-3h3" />
       <path d="M23.5 10.5h3a3 3 0 0 1 3 3v3" />
@@ -34,7 +35,7 @@ export const Logo = ({ size = 32, variant = "default", markOnly = false, classNa
       <span
         className={cn(
           "font-display font-extrabold leading-none tracking-[-0.04em]",
-          variant === "inverse" ? "text-white" : "text-ink-950 dark:text-white"
+          variant === "inverse" ? "text-white" : variant === "light" ? "text-ink-950" : "text-ink-950 dark:text-white"
         )}
         style={{ fontSize: size * 0.7 }}
       >

@@ -13,6 +13,9 @@ export const ROUTES = {
   billing: "/dashboard/billing",
   insights: "/dashboard/insights",
   reviews: "/dashboard/reviews",
+  studio: "/dashboard/studio",
+  enquiries: "/dashboard/enquiries",
+  studioPublic: (slug: string) => `/s/${encodeURIComponent(slug)}`,
 
   joined: "/dashboard/joined",
   joinedEvent: (id: string | number) => `/dashboard/joined/${id}`,
